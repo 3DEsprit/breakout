@@ -61,9 +61,9 @@ end
 function GenerateQuadsPows(atlas)
     local x = 0
     local y = 192
+    local pows = {}
 
     local counter = 1
-    local pows = {}
     local size = 16
 
     for i = 0, 10 do

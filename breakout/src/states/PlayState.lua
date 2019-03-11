@@ -28,6 +28,7 @@ function PlayState:enter(params)
     self.highScores = params.highScores
     self.ball = params.ball
     self.level = params.level
+    self.pows = {}
 
     self.recoverPoints = 5000
 
@@ -164,6 +165,12 @@ function PlayState:update(dt)
         end
     end
 
+    for k, pow in pairs(self.pows) do
+        if pow:collides(self.paddle) then
+            table.remove(self.pows, k)
+        end
+    end
+
     -- if ball goes below bounds, revert to serve state and decrease health
     if self.ball.y >= VIRTUAL_HEIGHT then
         self.health = self.health - 1
@@ -192,15 +199,27 @@ function PlayState:update(dt)
         brick:update(dt)
     end
 
+    for k, pow in pairs(self.pows) do
+        pow:update(dt)
+    end
+
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
+end
+
+function PlayState:addPow(pow)
+    table.insert(self.pows, pow)
 end
 
 function PlayState:render()
     -- render bricks
     for k, brick in pairs(self.bricks) do
         brick:render()
+    end
+
+    for k, pow in pairs(self.pows) do
+        pow:render()
     end
 
     -- render all particle systems

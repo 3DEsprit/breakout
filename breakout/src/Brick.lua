@@ -20,33 +20,33 @@ Brick = Class{}
 paletteColors = {
     -- blue
     [1] = {
-        ['r'] = 99,
-        ['g'] = 155,
-        ['b'] = 255
+        ['r'] = 0.4,
+        ['g'] = 0.6,
+        ['b'] = 1
     },
     -- green
     [2] = {
-        ['r'] = 106,
-        ['g'] = 190,
-        ['b'] = 47
+        ['r'] = 0.4,
+        ['g'] = 0.58,
+        ['b'] = 0.2
     },
     -- red
     [3] = {
-        ['r'] = 217,
-        ['g'] = 87,
-        ['b'] = 99
+        ['r'] = 0.82,
+        ['g'] = 0.38,
+        ['b'] = 0.4
     },
     -- purple
     [4] = {
-        ['r'] = 215,
-        ['g'] = 123,
-        ['b'] = 186
+        ['r'] = 0.85,
+        ['g'] = 0.5,
+        ['b'] = 0.75
     },
     -- gold
     [5] = {
-        ['r'] = 251,
-        ['g'] = 242,
-        ['b'] = 54
+        ['r'] = 0.98,
+        ['g'] = 0.97,
+        ['b'] = 0.2
     }
 }
 
@@ -77,7 +77,7 @@ function Brick:init(x, y)
     self.psystem:setLinearAcceleration(-15, 0, 15, 80)
 
     -- spread of particles; normal looks more natural than uniform
-    self.psystem:setAreaSpread('normal', 10, 10)
+    self.psystem:setEmissionArea('normal', 10, 10)
 end
 
 --[[
@@ -92,13 +92,12 @@ function Brick:hit()
         paletteColors[self.color].r,
         paletteColors[self.color].g,
         paletteColors[self.color].b,
-        55 * (self.tier + 1),
+        0.2 * ((self.tier / 255) + 0.004),
         paletteColors[self.color].r,
         paletteColors[self.color].g,
         paletteColors[self.color].b,
         0
     )
-    self.psystem:emit(64)
 
     -- sound on hit
     gSounds['brick-hit-2']:stop()
@@ -117,6 +116,10 @@ function Brick:hit()
         -- if we're in the first tier and the base color, remove brick from play
         if self.color == 1 then
             self.inPlay = false
+            -- if math.random(1, 10) == 1 do
+            gStateMachine.current:addPow(Powerup(pow_names[math.random(1, 10)], self.x, self.y))
+            -- end
+
         else
             self.color = self.color - 1
         end

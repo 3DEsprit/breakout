@@ -15,11 +15,15 @@ Class = require 'lib/class'
 -- a few global constants, centralized
 require 'src/constants'
 
+require 'src/pow_effects'
+
 -- the ball that travels around, breaking bricks and triggering lives lost
 require 'src/Ball'
 
 -- the entities in our game map that give us points when we collide with them
 require 'src/Brick'
+
+require 'src/Powerup'
 
 require 'src/Item'
 
