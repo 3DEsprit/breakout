@@ -206,12 +206,6 @@ function love.draw()
     
     -- use the state machine to defer rendering to the current state we're in
     gStateMachine:render()
-
-    love.graphics.draw(gTextures['main'], gFrames['powerups'][1], VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 4)
-    -- for k, pows in pairs(self.pows) do
-    --     brick:render()
-    -- end
-    -- love.graphics.draw(gTextures['main'], gFrames['key'], VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 4)
     
     -- display FPS for debugging; simply comment out to remove
     displayFPS()
